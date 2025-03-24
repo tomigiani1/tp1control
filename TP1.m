@@ -35,7 +35,7 @@
     
     % Punto de equlibrio (x'=0)
     u_e = u0;
-    x_e = [h0 ; v0];
+    x_e = [h0 ; 0];
     
     %vector de x punto
     f1 = x(2);
@@ -62,9 +62,9 @@
     D = double(subs(D,{x(1),x(2),u},{x_e(1),x_e(2),u_e}));
     
     % Trasnferencia de la Planta Linealizada
-    P = zpk(ss(A,B,C,D));
+    P = zpk(ss(A,B,C,D))
     
-    Avals=eig(A);
+    Avals=eig(A)
     
     %figure(); hold on
     %bode(P,optionss);
