@@ -29,7 +29,7 @@
     
     %-----------------------------------
     
-    orden = 1;
+    orden = 2;
     x=sym('x',[orden 1],'real');
     u=sym('u','real');
     
@@ -39,7 +39,7 @@
     
     %vector de x punto
     f1 = x(2);
-    f2 = (Qi-(u*a_salida*(sqrt(g*2)*x(1))))/ ((l_chico)^2 + (((2(l_chico)((l_grande)-(l_chico)))*x(1))/h_tanque)+ ((((l_grande)-(l_chico))/h_tanque)*x(1))^2);
+    f2 = ((Qi-(u*a_salida*(sqrt(g*2)*x(1)))) / ((l_chico)^2 + (((2*l_chico*((l_grande)-(l_chico)))*x(1))/h_tanque) + ((((l_grande)-(l_chico))/h_tanque)*x(1))^2));
 
     
     
@@ -66,8 +66,8 @@
     
     Avals=eig(A);
     
-    figure(); hold on
-    bode(P,optionss);
+    %figure(); hold on
+    %bode(P,optionss);
 
 
 
