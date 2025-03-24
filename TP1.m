@@ -62,7 +62,7 @@
     D = double(subs(D,{x(1),x(2),u},{x_e(1),x_e(2),u_e}));
     
     % Trasnferencia de la Planta Linealizada
-    P = zpk(ss(A,B,C,D))
+    P = tf(ss(A,B,C,D))
     
     Avals=eig(A)
     
