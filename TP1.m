@@ -39,8 +39,10 @@
     
     %vector de x punto
     f1 = x(2);
-    f2 = ((Qi-(u*a_salida*(sqrt(g*2)*x(1)))) / ((l_chico)^2 + (((2*l_chico*((l_grande)-(l_chico)))*x(1))/h_tanque) + ((((l_grande)-(l_chico))/h_tanque)*x(1))^2));
-
+    f2 = ((Qi - (u * a_salida * sqrt(2 * g * x(1)))) / ...
+        ((l_chico)^2 + (((2 * l_chico * ((l_grande) - (l_chico))) * x(1)) / h_tanque) + ...
+        ((((l_grande) - (l_chico)) / h_tanque) * x(1))^2));
+    
     
     
     f = [f1;f2];
@@ -55,10 +57,10 @@
     B = jacobian(f,u);
     B = double(subs(B,{x(1),x(2),u},{x_e(1),x_e(2),u_e}));
     
-    C = jacobian(g,x);
+    C = jacobian(y,x);
     C = double(subs(C,{x(1),x(2),u},{x_e(1),x_e(2),u_e}));
     
-    D = jacobian(g,u);
+    D = jacobian(y,u);
     D = double(subs(D,{x(1),x(2),u},{x_e(1),x_e(2),u_e}));
     
     % Trasnferencia de la Planta Linealizada
