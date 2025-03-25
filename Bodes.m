@@ -38,44 +38,44 @@ for i = 1:length(h_vec)
     h0 = h_vec(i);
     u0 = u_vec(i);
 
-    orden = 2;
-    x = sym('x', [orden 1], 'real');
-    u = sym('u', 'real');
-
-    % Punto de equilibrio (x' = 0)
-    u_e = u0;
-    x_e = [h0; 0];
-
-    % Definir ecuaciones
-    f1 = x(2);
-    f2 = ((Qi - (u * a_salida * sqrt(2 * g * x(1)))) / ...
-        ((l_chico)^2 + (((2 * l_chico * ((l_grande) - (l_chico))) * x(1)) / h_tanque) + ...
-        ((((l_grande) - (l_chico)) / h_tanque) * x(1))^2));
+    orden = 1;
+    x=sym('x',[orden 1],'real');
+    u=sym('u','real');
     
+    % Punto de equlibrio (x'=0)
+    u_e = u0;
+    x_e = h0;
+    
+    %x punto
+    f = ((Qi - (u * a_salida * sqrt(2 * g * x))) / ...
+        ((l_chico)^2 + (((2 * l_chico * ((l_grande) - (l_chico))) * x) / h_tanque) + ...
+        ((((l_grande) - (l_chico)) / h_tanque) * x)^2));
+    
+    
+    
+    %salida (Altura del agua)
+    y = x;
+    
+    A = jacobian(f,x);
+    %la funcion subs cambia las ocurrencias de {x,u} por {x_e,u_e}
+    A = double(subs(A,{x,u},{x_e,u_e}));
+    
+    B = jacobian(f,u);
+    B = double(subs(B,{x,u},{x_e,u_e}));
+    
+    C = jacobian(y,x);
+    C = double(subs(C,{x,u},{x_e,u_e}));
+    
+    D = jacobian(y,u);
+    D = double(subs(D,{x,u},{x_e,u_e}));
+    
+    % Trasnferencia de la Planta Linealizada
+    P = tf(ss(A,B,C,D))
+    
+    Avals=eig(A)
+    
+    bode(P,optionss);
 
-    f = [f1; f2];
-
-    % Salida (altura del agua)
-     y = x(1);
-
-    % Linealización
-    A = jacobian(f, x);
-    A = double(subs(A, {x(1), x(2), u}, {x_e(1), x_e(2), u_e}));
-
-    B = jacobian(f, u);
-    B = double(subs(B, {x(1), x(2), u}, {x_e(1), x_e(2), u_e}));
-
-    C = jacobian( y, x);
-    C = double(subs(C, {x(1), x(2), u}, {x_e(1), x_e(2), u_e}));
-
-    D = jacobian( y, u);
-    D = double(subs(D, {x(1), x(2), u}, {x_e(1), x_e(2), u_e}));
-
-    % Función de transferencia de la planta linealizada
-    P = tf(ss(A, B, C, D));
-
-    % Graficar Bode
-    bode(P, optionss);
 end
 
 legend(arrayfun(@(h) sprintf('h = %.2f m', h), h_vec, 'UniformOutput', false))
