@@ -31,7 +31,6 @@ u_vec = Qi ./ (a_salida .* sqrt(2 * g * h_vec));
 
 
 figure(); hold on
-title('Diagrama de Bode para distintos pares de h y u')
 
 % Iterar sobre cada par (h, u)
 for i = 1:length(h_vec)

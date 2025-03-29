@@ -65,9 +65,14 @@
     
     Avals=eig(A)
     
+    %figure(); hold on
+    %bode(P,optionss);
+
+    %Diseño el controlador. Lo quiero lo mas simple posible, por lo que diseñaré un PI
+
+    C= -(s+0.0024)/s;
+    
+    L= minreal(P*C);
+
     figure(); hold on
-    bode(P,optionss);
-
-
-
-
+    bode(L,optionss);
