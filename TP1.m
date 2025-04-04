@@ -24,10 +24,9 @@
         g = 9.81;  % Gravedad
         h0=0.45; %eq
 
-        u0=0.504 %CALCULADO EN EL ONENOTE
+        u0= Qi/(a_salida*sqrt(2*g*h0)) 
         
     
-    %-----------------------------------
     
     orden = 1;
     x=sym('x',[orden 1],'real');
@@ -70,9 +69,12 @@
 
     %Diseño el controlador. Lo quiero lo mas simple posible, por lo que diseñaré un PI
 
-    C= -(s+0.0024)/s;
+    k=db2mag(14.9);
+    C= (-1*k)*(s+0.02)/s;
+
+    
     
     L= minreal(P*C);
 
-    figure(); hold on
-    bode(L,optionss);
+    %figure(); hold on
+    %bode(L,optionss);
