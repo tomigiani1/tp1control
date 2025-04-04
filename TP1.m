@@ -76,5 +76,17 @@
     
     L= minreal(P*C);
 
+
     %figure(); hold on
     %bode(L,optionss);
+
+
+
+
+    %Cerramos el lazo para poder modificar el lugar del cero y la magnitud
+    %y obtener el tiempo de establecimiento deseado
+    T = feedback(L,1);
+    figure;
+    step(T)
+    grid on
+    title('Respuesta al escalón del sistema en lazo cerrado')
